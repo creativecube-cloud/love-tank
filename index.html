@@ -55,11 +55,6 @@
       margin-bottom: 15px;
       text-align: left;
     }
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
     .input-group input {
       width: 95%;
       padding: 10px;
@@ -681,7 +676,9 @@
     // --- Utility Functions (Modified for User-Specific Data) ---
     const createCheckboxItem = (id, text, isDone, collectionName) => {
       const li = document.createElement("li");
-      li.classList.add('checkbox-item');
+
+      const checkboxContainer = document.createElement("div");
+      checkboxContainer.classList.add('checkbox-item');
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
@@ -698,9 +695,10 @@
         await updateDoc(docRef, { done: checkbox.checked });
       };
 
-      li.appendChild(checkbox);
-        li.appendChild(span);
-        return li;
+      checkboxContainer.appendChild(checkbox);
+      checkboxContainer.appendChild(span);
+      li.appendChild(checkboxContainer);
+      return li;
     };
     
     const deleteItem = async (collectionName, id) => {
@@ -826,7 +824,7 @@
           manna: newManna
         });
       } catch (err) {
-        console.error("Error updating tank:", err);
+          console.error("Error updating tank:", err);
       }
     };
 
