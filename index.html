@@ -722,11 +722,31 @@
     window.updateTank = async (person, change) => {
       if (!userUID) return;
       const ref = doc(db, "users", userUID, "tanks", "levels");
+      
       try {
         const snap = await getDoc(ref);
-        let current = snap.exists() ? snap.data()[person] : 0;
-        let newVal = Math.max(0, Math.min(100, current + change));
-        await setDoc(ref, { [person]: newVal }, { merge: true });
+        let currentKhaled = 0;
+        let currentManna = 0;
+
+        if (snap.exists()) {
+          const data = snap.data();
+          currentKhaled = data.khaled || 0;
+          currentManna = data.manna || 0;
+        }
+
+        let newKhaled = currentKhaled;
+        let newManna = currentManna;
+
+        if (person === 'khaled') {
+          newKhaled = Math.max(0, Math.min(100, currentKhaled + change));
+        } else if (person === 'manna') {
+          newManna = Math.max(0, Math.min(100, currentManna + change));
+        }
+
+        await setDoc(ref, {
+          khaled: newKhaled,
+          manna: newManna
+        });
       } catch (err) {
         console.error("Error updating tank:", err);
       }
