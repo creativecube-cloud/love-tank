@@ -1143,28 +1143,18 @@
       
       try {
         const snap = await getDoc(ref);
-        let currentKhaled = 0;
-        let currentManna = 0;
+        let currentLevel = 0;
 
         if (snap.exists()) {
-          const data = snap.data();
-          currentKhaled = data.khaled || 0;
-          currentManna = data.manna || 0;
+          currentLevel = snap.data()[person] || 0;
         }
 
-        let newKhaled = Math.max(0, Math.min(100, currentKhaled + change));
-        let newManna = Math.max(0, Math.min(100, currentManna + change));
-
-        if (person === 'khaled') {
-          newKhaled = Math.max(0, Math.min(100, currentKhaled + change));
-        } else if (person === 'manna') {
-          newManna = Math.max(0, Math.min(100, currentManna + change));
-        }
+        const newLevel = Math.max(0, Math.min(100, currentLevel + change));
 
         await setDoc(ref, {
-          khaled: newKhaled,
-          manna: newManna
-        });
+          [person]: newLevel
+        }, { merge: true });
+        
       } catch (err) {
           console.error("Error updating tank:", err);
       }
