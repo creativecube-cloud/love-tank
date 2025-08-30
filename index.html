@@ -6,15 +6,26 @@
   <title>Love Tank</title>
   <link rel="manifest" href="/love-tank/manifest.json">
   <style>
+    :root {
+      /* Soft Classic Theme */
+      --background-color: #f7e6e6;
+      --card-background: #fff;
+      --heading-color: #4b3636;
+      --tank-background: #d9c8c8;
+      --khaled-color: #5d7e9f;
+      --manna-color: #b05e6b;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background: #ffeef5;
+      background: var(--background-color);
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      transition: background 0.5s ease;
     }
     .main-app {
       display: none;
@@ -27,17 +38,18 @@
       text-align: center;
     }
     .login-container {
-      background: white;
+      background: var(--card-background);
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
-      color: #333;
+      color: var(--heading-color);
     }
     h3 {
       text-align: center;
+      color: var(--heading-color);
     }
     .input-group {
       margin-bottom: 15px;
@@ -70,7 +82,7 @@
       text-align: center;
       padding: 10px;
       border-radius: 10px;
-      background: #ebebeb;
+      background: var(--tank-background);
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .progress {
@@ -87,10 +99,10 @@
       transition: width 0.3s;
     }
     .khaled .progress-fill {
-      background: #003366;
+      background: var(--khaled-color);
     }
     .manna .progress-fill {
-      background: #b30059;
+      background: var(--manna-color);
     }
     .tank button {
       margin: 5px;
@@ -102,8 +114,10 @@
     .header {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
       gap: 10px;
       margin-bottom: 20px;
+      width: 100%;
     }
     .header button {
       padding: 8px 15px;
@@ -114,7 +128,7 @@
     .section {
       margin: 20px 0;
       padding: 15px;
-      background: white;
+      background: var(--card-background);
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
@@ -228,14 +242,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #ffeef5;
+      background: var(--background-color);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 999;
       font-size: 1.5em;
-      color: #b30059;
+      color: var(--manna-color);
       text-align: center;
+      transition: background 0.5s ease, color 0.5s ease;
     }
     .loading-content {
       display: flex;
@@ -244,7 +259,7 @@
     }
     .spinner {
       border: 4px solid rgba(179, 0, 89, 0.1);
-      border-top: 4px solid #b30059;
+      border-top: 4px solid var(--manna-color);
       border-radius: 50%;
       width: 30px;
       height: 30px;
@@ -255,6 +270,41 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* New Themes */
+    .theme-soft-classic {
+      --background-color: #f7e6e6;
+      --card-background: #fff;
+      --heading-color: #4b3636;
+      --tank-background: #d9c8c8;
+      --khaled-color: #5d7e9f;
+      --manna-color: #b05e6b;
+    }
+    .theme-midnight-sky {
+      --background-color: #0d1b2a;
+      --card-background: #1b263b;
+      --heading-color: #e0e1dd;
+      --tank-background: #415a77;
+      --khaled-color: #0077b6;
+      --manna-color: #ff70a6;
+    }
+    .theme-coastal-sunrise {
+      --background-color: #fef9ef;
+      --card-background: #fcf5e5;
+      --heading-color: #432400;
+      --tank-background: #e5d5b7;
+      --khaled-color: #8ecae6;
+      --manna-color: #f4a261;
+    }
+    .theme-forest-canopy {
+      --background-color: #f0f8f0;
+      --card-background: #f8fcf8;
+      --heading-color: #0d420f;
+      --tank-background: #c8dbc8;
+      --khaled-color: #38a3a5;
+      --manna-color: #547743;
+    }
+
   </style>
 </head>
 <body>
@@ -285,8 +335,11 @@
 
   <div id="main-app">
     <div class="header">
-      <button onclick="openSettings()">Account Settings</button>
-      <button onclick="logOut()">Log Out</button>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="openSettings()">Account Settings</button>
+        <button onclick="openThemes()">Themes</button>
+        <button onclick="logOut()">Log Out</button>
+      </div>
     </div>
     
     <h1><span id="khaled-name-display">His</span> and <span id="manna-name-display">Her</span> Space</h1>
@@ -361,6 +414,21 @@
         </div>
       </div>
     </div>
+
+    <div id="themesModal" class="modal">
+      <div class="modal-content">
+        <h3>Choose Theme</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button onclick="changeTheme('soft-classic')">Soft Classic</button>
+          <button onclick="changeTheme('midnight-sky')">Midnight Sky</button>
+          <button onclick="changeTheme('coastal-sunrise')">Coastal Sunrise</button>
+          <button onclick="changeTheme('forest-canopy')">Forest Canopy</button>
+        </div>
+        <div style="text-align: right; margin-top: 15px;">
+          <button onclick="document.getElementById('themesModal').style.display='none'">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -399,7 +467,7 @@
     const mainApp = document.getElementById('main-app');
     
     let userUID;
-
+    
     // --- Page and UI Control ---
     const togglePageVisibility = (page) => {
         loadingElement.style.display = 'none';
@@ -717,6 +785,16 @@
         console.error("Error logging out:", error);
         alert("An error occurred while logging out.");
       }
+    };
+
+    window.openThemes = () => {
+      document.getElementById('themesModal').style.display = 'block';
+    };
+
+    window.changeTheme = (themeName) => {
+      const root = document.documentElement;
+      root.className = `theme-${themeName}`;
+      document.getElementById('themesModal').style.display = 'none';
     };
 
     window.updateTank = async (person, change) => {
