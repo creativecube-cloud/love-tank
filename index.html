@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Love Tank</title>
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/love-tank/manifest.json">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -366,7 +366,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('/love-tank/sw.js')
           .then(reg => console.log('Service Worker registered.'))
           .catch(err => console.error('Service Worker registration failed:', err));
       });
