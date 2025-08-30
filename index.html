@@ -8,12 +8,18 @@
   <style>
     :root {
       /* Soft Classic Theme */
-      --background-color: #f7e6e6;
+      --background-color: #fcebeb;
       --card-background: #fff;
       --heading-color: #4b3636;
-      --tank-background: #d9c8c8;
-      --khaled-color: #5d7e9f;
-      --manna-color: #b05e6b;
+      --tank-background: #e8dada;
+      --khaled-color: #79a3b1;
+      --manna-color: #c48c9c;
+      --text-color: #000;
+      --accent-color: var(--manna-color);
+      --button-text-color: #fff;
+      --header-button-bg: var(--accent-color);
+      --header-button-text: var(--button-text-color);
+      --section-emoji: '🤎';
     }
 
     body {
@@ -26,6 +32,7 @@
       align-items: center;
       flex-direction: column;
       transition: background 0.5s ease;
+      color: var(--text-color);
     }
     .main-app {
       display: none;
@@ -119,6 +126,11 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      background-color: var(--header-button-bg);
+      color: var(--header-button-text);
+    }
+    .header button:hover {
+      opacity: 0.8;
     }
     .section {
       margin: 20px 0;
@@ -126,6 +138,20 @@
       background: var(--card-background);
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1;
+    }
+    .section h3 {
+      text-align: center;
+      position: relative;
+    }
+    .section h3::before {
+      content: var(--section-emoji);
+      margin-right: 10px;
+    }
+    .section h3::after {
+      content: var(--section-emoji);
+      margin-left: 10px;
     }
     .input-container {
       display: flex;
@@ -206,6 +232,10 @@
     }
     .modal-content h3 {
       margin-top: 0;
+      color: #000;
+    }
+    .modal-content label {
+      color: #000;
     }
     .modal-content input {
       margin-bottom: 10px;
@@ -253,7 +283,7 @@
       align-items: center;
     }
     .spinner {
-      border: 4px solid rgba(179, 0, 89, 0.1);
+      border: 4hpx solid rgba(179, 0, 89, 0.1);
       border-top: 4px solid var(--manna-color);
       border-radius: 50%;
       width: 30px;
@@ -267,39 +297,327 @@
     }
 
     /* New Themes */
-    .theme-soft-classic {
-      --background-color: #f7e6e6;
+    .theme-classic {
+      --background-color: #fcebeb;
       --card-background: #fff;
       --heading-color: #4b3636;
-      --tank-background: #d9c8c8;
-      --khaled-color: #5d7e9f;
-      --manna-color: #b05e6b;
+      --tank-background: #e8dada;
+      --khaled-color: #79a3b1;
+      --manna-color: #c48c9c;
+      --text-color: #000;
+      --accent-color: var(--manna-color);
+      --button-text-color: #fff;
+      --header-button-bg: var(--accent-color);
+      --header-button-text: var(--button-text-color);
+      --section-emoji: '🤍';
+      --heart-color: #e6b3c0;
     }
-    .theme-midnight-sky {
-      --background-color: #0d1b2a;
-      --card-background: #1b263b;
-      --heading-color: #e0e1dd;
-      --tank-background: #415a77;
-      --khaled-color: #0077b6;
-      --manna-color: #ff70a6;
+    .theme-midnight {
+      --background-color: #0D1B2A;
+      --card-background: #3B4E6B;
+      --heading-color: #CFD8DC;
+      --tank-background: #3B4E6B;
+      --khaled-color: #4B0082;
+      --manna-color: #1034A6;
+      --text-color: #CFD8DC;
+      --accent-color: #5B428A;
+      --header-button-bg: #5B428A;
+      --header-button-text: #fff;
+      --heart-color: #CFD8DC;
+      --section-emoji: '🤍';
     }
-    .theme-coastal-sunrise {
-      --background-color: #fef9ef;
-      --card-background: #fcf5e5;
-      --heading-color: #432400;
-      --tank-background: #e5d5b7;
-      --khaled-color: #8ecae6;
-      --manna-color: #f4a261;
+    .theme-sunset {
+      --background-color: #F8BBD0;
+      --card-background: #FFF8DC;
+      --heading-color: #6A0000;
+      --tank-background: #E9967A;
+      --khaled-color: #DAA520;
+      --manna-color: #DC143C;
+      --text-color: #000;
+      --accent-color: #DC143C;
+      --header-button-bg: #5B428A;
+      --header-button-text: #fff;
+      --heart-color: #FFA500;
+      --section-emoji: '🧡';
+      background-image: linear-gradient(to top, #FF4500 0%, #FFD700 30%, #FFB6C1 60%, #8A2BE2 100%);
     }
-    .theme-forest-canopy {
-      --background-color: #f0f8f0;
-      --card-background: #f8fcf8;
-      --heading-color: #0d420f;
-      --tank-background: #c8dbc8;
-      --khaled-color: #38a3a5;
-      --manna-color: #547743;
+    .theme-forest {
+      --background-color: #D1E2D1;
+      --card-background: #F1F7F1;
+      --heading-color: #214321;
+      --tank-background: #A9C6A9;
+      --khaled-color: #78909C;
+      --manna-color: #466C46;
+      --text-color: #000;
+      --accent-color: #466C46;
+      --header-button-bg: #78909C;
+      --header-button-text: #fff;
+      --heart-color: #5d4037;
+      --section-emoji: '🤎';
+    }
+    
+    /* Normal Theme Button Styling */
+    .theme-classic .section button,
+    .theme-classic .input-container button,
+    .theme-classic .section-footer button,
+    .theme-classic .actions button:not(.liked) {
+        background-color: var(--manna-color);
+        color: var(--button-text-color);
+    }
+    .theme-midnight .section button,
+    .theme-midnight .input-container button,
+    .theme-midnight .section-footer button,
+    .theme-midnight .actions button:not(.liked) {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+    }
+    .theme-sunset .section button,
+    .theme-sunset .input-container button,
+    .theme-sunset .section-footer button,
+    .theme-sunset .actions button:not(.liked) {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+    }
+    .theme-forest .section button,
+    .theme-forest .input-container button,
+    .theme-forest .section-footer button,
+    .theme-forest .actions button:not(.liked) {
+        background-color: var(--khaled-color);
+        color: var(--button-text-color);
     }
 
+    .theme-classic .actions button.liked,
+    .theme-midnight .actions button.liked,
+    .theme-sunset .actions button.liked,
+    .theme-forest .actions button.liked {
+        color: var(--heart-color);
+    }
+
+    /* Modal Button Styling for Normal Themes */
+    .theme-classic .modal-buttons button {
+        background-color: var(--manna-color);
+        color: var(--button-text-color);
+    }
+    .theme-midnight .modal-buttons button {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+    }
+    .theme-sunset .modal-buttons button {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+    }
+    .theme-forest .modal-buttons button {
+        background-color: var(--khaled-color);
+        color: var(--button-text-color);
+    }
+
+
+    /* Superhero Themes */
+    .theme-batman-signal {
+      --background-color: #000;
+      --card-background: #4A4A4A;
+      --heading-color: #fff;
+      --tank-background: #4A4A4A;
+      --khaled-color: #FFD700;
+      --manna-color: #FFD700;
+      --text-color: #fff;
+      --accent-color: #FFD700;
+      --header-button-bg: var(--accent-color);
+      --header-button-text: #000;
+      --heart-color: #000000;
+      --section-emoji: '🦇';
+      background: radial-gradient(circle at 50% 10%, rgba(255,215,0,0.5), transparent 60%);
+    }
+    .theme-batman-signal .tank button, .theme-batman-signal .section button {
+        background-color: var(--accent-color);
+        color: #000;
+    }
+    .theme-batman-signal .modal-buttons button {
+        background-color: var(--accent-color);
+        color: #000;
+    }
+    .theme-batman-signal .tank h3 {
+        color: var(--text-color);
+    }
+    .theme-batman-signal .section h3 {
+        color: var(--text-color);
+    }
+    .theme-spiderman {
+      --background-color: #00008B;
+      --card-background: #cccccc;
+      --heading-color: #fff;
+      --tank-background: rgba(255, 255, 255, 0.1);
+      --khaled-color: #FF0000;
+      --manna-color: #FF0000;
+      --text-color: #000;
+      --accent-color: #FF0000;
+      --header-button-bg: var(--accent-color);
+      --header-button-text: #fff;
+      --heart-color: red;
+      --section-emoji: '🕷️';
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255,0,0,0.1) 0px,
+        rgba(255,0,0,0.1) 2px,
+        transparent 2px,
+        transparent 10px
+      );
+    }
+    .theme-spiderman h1, .theme-spiderman .tank h3 {
+        color: #fff;
+    }
+    .theme-spiderman .tank button, .theme-spiderman .section button {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+    .theme-spiderman .modal-buttons button {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+    .theme-spiderman .section h3, .theme-spiderman .section ul li, .theme-spiderman .section ul li small {
+      color: #000;
+    }
+    .theme-hulk {
+      --background-color: #0C1E0C;
+      --card-background: #286C28;
+      --heading-color: #fff;
+      --tank-background: #286C28;
+      --khaled-color: #9E9E9E;
+      --manna-color: #9E9E9E;
+      --text-color: #fff;
+      --accent-color: #286C28;
+      --header-button-bg: #9E9E9E;
+      --header-button-text: #fff;
+      --heart-color: green;
+      --section-emoji: '🧟';
+      background: #0C1E0C;
+    }
+    .theme-hulk::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(
+        45deg, #153815 25%, transparent 25%, transparent 75%, #153815 75%, #153815
+      ), linear-gradient(
+        45deg, #153815 25%, transparent 25%, transparent 75%, #153815 75%, #153815
+      );
+      background-size: 50px 50px;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    .theme-hulk .tank button, .theme-hulk .section button {
+        background-color: var(--header-button-bg);
+        color: #fff;
+    }
+    .theme-hulk .modal-buttons button {
+        background-color: #9E9E9E;
+        color: #fff;
+    }
+    .theme-hulk .tank h3 {
+        color: var(--text-color);
+    }
+    .theme-hulk .section h3 {
+        color: var(--text-color);
+    }
+    .theme-wolverine {
+      --background-color: #FDDA0D;
+      --card-background: #192D6A;
+      --heading-color: #000000;
+      --tank-background: #192D6A;
+      --khaled-color: #87CEEB; /* Sky blue */
+      --manna-color: #87CEEB; /* Sky blue */
+      --text-color: #FFFFFF;
+      --accent-color: #192D6A; /* Dark blue for header buttons */
+      --button-color: #36454F; /* Charcoal Gray for inner buttons */
+      --button-text-color: #FFFFFF;
+      --header-button-bg: var(--accent-color);
+      --header-button-text: var(--button-text-color);
+      --heart-color: yellow;
+      --section-emoji: '⚔️';
+      background: #FDDA0D;
+    }
+    .theme-wolverine::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(0,0,0,0.1) 0px,
+        rgba(0,0,0,0.1) 1px,
+        transparent 1px,
+        transparent 10px
+      );
+      z-index: -1;
+    }
+    .theme-wolverine h1 {
+        color: var(--heading-color);
+    }
+    .theme-wolverine .tank h3 {
+        color: var(--text-color);
+    }
+    .theme-wolverine .section h3 {
+        color: var(--text-color);
+    }
+    .theme-wolverine .tank button, .theme-wolverine .section button {
+        background-color: var(--button-color);
+        color: var(--button-text-color);
+    }
+    .theme-wolverine .input-container button, .theme-wolverine .section-footer button {
+        background-color: var(--button-color);
+        color: var(--button-text-color);
+    }
+    .theme-wolverine .modal-content {
+      background-color: #fff;
+    }
+    .theme-wolverine .modal-content h3, .theme-wolverine .modal-content label {
+      color: #000;
+    }
+    .theme-wolverine .modal-content input {
+      background-color: #D3D3D3;
+      color: #000;
+      border: 1px solid #000;
+    }
+    .theme-wolverine .modal-buttons button {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+    }
+    .theme-wolverine .delete-account-btn {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+    }
+    .theme-wolverine .header button {
+        background-color: var(--accent-color);
+        color: var(--header-button-text);
+    }
+    .theme-wolverine .actions button {
+        background-color: transparent;
+        color: var(--text-color);
+    }
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+    .section ul li {
+      color: var(--text-color);
+    }
+    .section ul li small {
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+    .actions button.liked {
+      color: var(--heart-color);
+    }
   </style>
 </head>
 <body>
@@ -337,7 +655,7 @@
       </div>
     </div>
     
-    <h1><span id="khaled-name-display">His</span> and <span id="manna-name-display">Her</span> Space</h1>
+    <h1 style="text-align: center;"><span id="khaled-name-display"></span> and <span id="manna-name-display"></span> Space</h1>
     
     <div class="tanks">
       <div class="tank khaled">
@@ -355,7 +673,7 @@
     </div>
     
     <div class="section">
-      <h3>Notes 💌</h3>
+      <h3>Notes</h3>
       <div class="input-container">
         <input type="text" id="noteInput" placeholder="Write a note...">
         <button onclick="addNote()">Add Note</button>
@@ -367,7 +685,7 @@
     </div>
 
     <div class="section">
-      <h3>Topics to Talk About 💬</h3>
+      <h3>Topics to Talk About</h3>
       <div class="input-container">
         <input type="text" id="topicInput" placeholder="Add a topic...">
         <button onclick="addTopic()">Add Topic</button>
@@ -379,7 +697,7 @@
     </div>
 
     <div class="section">
-      <h3>To-Do List ✅📝</h3>
+      <h3>To-Do List</h3>
       <div class="input-container">
         <input type="text" id="todoInput" placeholder="Suggest an activity...">
         <button onclick="addTodo()">Add Request</button>
@@ -414,15 +732,26 @@
       <div class="modal-content">
         <h3>Choose Theme</h3>
         <div style="display: flex; flex-direction: column; gap: 10px;">
-          <button onclick="changeTheme('soft-classic')">Soft Classic</button>
-          <button onclick="changeTheme('midnight-sky')">Midnight Sky</button>
-          <button onclick="changeTheme('coastal-sunrise')">Coastal Sunrise</button>
-          <button onclick="changeTheme('forest-canopy')">Forest Canopy</button>
+          <button onclick="changeTheme('classic')">Classic</button>
+          <button onclick="changeTheme('midnight')">Midnight</button>
+          <button onclick="changeTheme('sunset')">Sunset</button>
+          <button onclick="changeTheme('forest')">Forest</button>
         </div>
         <div style="text-align: right; margin-top: 15px;">
           <button onclick="document.getElementById('themesModal').style.display='none'">Close</button>
         </div>
       </div>
+    </div>
+
+    <div class="section" style="text-align: center; margin-top: 40px; border: 2px solid #555;">
+        <h3>Superhero-Inspired Themes</h3>
+        <p>A collection of exclusive themes for our most dedicated users.</p>
+        <div style="display: flex; justify-content: space-around; gap: 10px;">
+            <button onclick="changeTheme('batman-signal')">Batman 🦇</button>
+            <button onclick="changeTheme('spiderman')">Spider-Man 🕷️</button>
+            <button onclick="changeTheme('hulk')">Hulk 🧟</button>
+            <button onclick="changeTheme('wolverine')">Wolverine ⚔️</button>
+        </div>
     </div>
   </div>
 
@@ -457,6 +786,15 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // --- Load Saved Theme on startup ---
+    const loadSavedTheme = () => {
+      const savedTheme = localStorage.getItem('selectedTheme');
+      if (savedTheme) {
+        document.documentElement.className = `theme-${savedTheme}`;
+      }
+    };
+    loadSavedTheme();
+    
     const loadingElement = document.getElementById('loading');
     const loginPage = document.getElementById('login-page');
     const mainApp = document.getElementById('main-app');
@@ -580,6 +918,9 @@
           
           const heartButton = document.createElement("button");
           heartButton.innerHTML = note.liked ? "❤️" : "🤍";
+          if (note.liked) {
+            heartButton.classList.add('liked');
+          }
           heartButton.onclick = async () => {
             await updateDoc(doc(db, "users", userUID, "notes", note.id), { liked: !note.liked });
           };
@@ -792,6 +1133,7 @@
     window.changeTheme = (themeName) => {
       const root = document.documentElement;
       root.className = `theme-${themeName}`;
+      localStorage.setItem('selectedTheme', themeName);
       document.getElementById('themesModal').style.display = 'none';
     };
 
@@ -810,8 +1152,8 @@
           currentManna = data.manna || 0;
         }
 
-        let newKhaled = currentKhaled;
-        let newManna = currentManna;
+        let newKhaled = Math.max(0, Math.min(100, currentKhaled + change));
+        let newManna = Math.max(0, Math.min(100, currentManna + change));
 
         if (person === 'khaled') {
           newKhaled = Math.max(0, Math.min(100, currentKhaled + change));
