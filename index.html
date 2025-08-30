@@ -3,30 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Space</title>
+  <title>His and Her Space</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    :root {
-      /* You can change these colors to customize the theme */
-      --primary-bg: #f8f8f8;
-      --secondary-bg: #ffffff;
-      --accent-color-1: #3498db;
-      --accent-color-2: #e74c3c;
-      --text-color: #333;
-      --shadow: rgba(0,0,0,0.1);
-    }
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background: var(--primary-bg);
-      color: var(--text-color);
+      background: #ffeef5; /* soft powdery pink */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .main-app {
+      display: none;
+      width: 100%;
+    }
+    .login-page {
+      display: none;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
-      color: var(--text-color);
+      color: #333;
     }
     h3 {
       text-align: center;
+    }
+    .input-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .input-group input {
+      width: 95%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
     }
     .tanks {
       display: flex;
@@ -35,12 +66,12 @@
       margin: 20px 0;
     }
     .tank {
-      flex: 1;
+      flex: 1; /* Use flexbox to make tanks equal width */
       text-align: center;
       padding: 10px;
       border-radius: 10px;
-      background: var(--secondary-bg);
-      box-shadow: 0 2px 5px var(--shadow);
+      background: #ebebeb; /* light gray */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .progress {
       width: 100%;
@@ -55,11 +86,11 @@
       width: 0%;
       transition: width 0.3s;
     }
-    .user1 .progress-fill {
-      background: var(--accent-color-1);
+    .khaled .progress-fill {
+      background: #003366; /* deep navy blue */
     }
-    .user2 .progress-fill {
-      background: var(--accent-color-2);
+    .manna .progress-fill {
+      background: #b30059; /* deep raspberry pink */
     }
     .tank button {
       margin: 5px;
@@ -68,20 +99,40 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    button:hover {
-      opacity: 0.8;
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .header button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
     .section {
       margin: 20px 0;
       padding: 15px;
-      background: var(--secondary-bg);
+      background: white;
       border-radius: 10px;
-      box-shadow: 0 2px 5px var(--shadow);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .input-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .input-container input {
+      flex: 1;
+      margin: 0;
+    }
+    .input-container button {
+      margin: 0;
     }
     input, textarea {
       width: 100%;
       padding: 8px;
-      margin: 8px 0;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
@@ -118,80 +169,595 @@
     .checkbox-item span.done {
       text-decoration: line-through;
     }
-    #auth-container {
-      max-width: 400px;
-      margin: 50px auto;
+    .section-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
       padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
       border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .modal-content input {
+      margin-bottom: 10px;
+    }
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .modal-buttons .right {
+      display: flex;
+      gap: 10px;
+    }
+    .delete-account-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-account-btn:hover {
+      opacity: 0.8;
+    }
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffeef5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      font-size: 1.5em;
+      color: #b30059;
       text-align: center;
     }
-    .hidden {
-      display: none;
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .spinner {
+      border: 4px solid rgba(179, 0, 89, 0.1);
+      border-top: 4px solid #b30059;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin-top: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-
-  <div id="auth-container">
-    <h2>Sign Up or Log In</h2>
-    <input type="text" id="auth-username" placeholder="Username" required>
-    <input type="password" id="auth-password" placeholder="Password" required>
-    <button id="auth-signup-btn">Sign Up</button>
-    <button id="auth-login-btn">Log In</button>
-    <p id="auth-error-message"></p>
-    
-    <div id="name-inputs" class="hidden">
-      <input type="text" id="user1-name-input" placeholder="Your Name" required>
-      <input type="text" id="user2-name-input" placeholder="Your Partner's Name" required>
-      <button id="save-names-btn">Save and Enter</button>
+  <div id="loading">
+    <div class="loading-content">
+      <p>Connecting Hearts...</p>
+      <div class="spinner"></div>
     </div>
   </div>
 
-  <div id="app-container" class="hidden">
-    <button id="logout-btn" style="float:right; margin-bottom: 10px;">Log Out</button>
-    <h1 id="main-title">[User 1] and [User 2]'s Space</h1>
+  <div id="login-page">
+    <div class="login-container">
+      <h1>Couple Login</h1>
+      <div class="input-group">
+        <label for="username">Couple Username</label>
+        <input type="text" id="username">
+      </div>
+      <div class="input-group">
+        <label for="password">Couple Password</label>
+        <input type="password" id="password" placeholder="Minimum 6 characters">
+      </div>
+      <div class="button-group">
+        <button onclick="signUp()">Sign Up</button>
+        <button onclick="logIn()">Log In</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="main-app">
+    <div class="header">
+      <button onclick="openSettings()">Account Settings</button>
+      <button onclick="logOut()">Log Out</button>
+    </div>
+    
+    <h1><span id="khaled-name-display">His</span> and <span id="manna-name-display">Her</span> Space</h1>
     
     <div class="tanks">
-      <div class="tank user1">
-        <h3 id="user1-tank-title">[User 1]'s Tank</h3>
-        <div class="progress"><div class="progress-fill" id="user1-fill"></div></div>
-        <button id="user1-minus">-</button>
-        <button id="user1-plus">+</button>
+      <div class="tank khaled">
+        <h3 id="khaled-tank-heading">His Tank</h3>
+        <div class="progress"><div class="progress-fill" id="khaled-fill"></div></div>
+        <button onclick="updateTank('khaled', -20)">-</button>
+        <button onclick="updateTank('khaled', 20)">+</button>
       </div>
-      <div class="tank user2">
-        <h3 id="user2-tank-title">[User 2]'s Tank</h3>
-        <div class="progress"><div class="progress-fill" id="user2-fill"></div></div>
-        <button id="user2-minus">-</button>
-        <button id="user2-plus">+</button>
+      <div class="tank manna">
+        <h3 id="manna-tank-heading">Her Tank</h3>
+        <div class="progress"><div class="progress-fill" id="manna-fill"></div></div>
+        <button onclick="updateTank('manna', -20)">-</button>
+        <button onclick="updateTank('manna', 20)">+</button>
       </div>
     </div>
     
     <div class="section">
       <h3>Notes 💌</h3>
-      <input type="text" id="noteInput" placeholder="Write a note...">
-      <button>Add Note</button>
+      <div class="input-container">
+        <input type="text" id="noteInput" placeholder="Write a note...">
+        <button onclick="addNote()">Add Note</button>
+      </div>
       <ul id="notesList"></ul>
+      <div class="section-footer">
+        <button onclick="clearAll('notes')">Clear</button>
+      </div>
     </div>
 
     <div class="section">
       <h3>Topics to Talk About 💬</h3>
-      <input type="text" id="topicInput" placeholder="Add a topic...">
-      <button>Add Topic</button>
+      <div class="input-container">
+        <input type="text" id="topicInput" placeholder="Add a topic...">
+        <button onclick="addTopic()">Add Topic</button>
+      </div>
       <ul id="topicsList"></ul>
+      <div class="section-footer">
+        <button onclick="clearAll('topics')">Clear</button>
+      </div>
     </div>
 
     <div class="section">
       <h3>To-Do List ✅📝</h3>
-      <input type="text" id="todoInput" placeholder="Suggest an activity...">
-      <button>Add Request</button>
+      <div class="input-container">
+        <input type="text" id="todoInput" placeholder="Suggest an activity...">
+        <button onclick="addTodo()">Add Request</button>
+      </div>
       <h4>Approved Activities</h4>
       <ul id="approvedList"></ul>
       <h4>Pending Requests</h4>
       <ul id="pendingList"></ul>
+      <div class="section-footer">
+        <button onclick="clearAll('todos')">Clear</button>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <h3>Change Names</h3>
+        <label for="khaled-name-input">His name:</label>
+        <input type="text" id="khaled-name-input">
+        <label for="manna-name-input">Her name:</label>
+        <input type="text" id="manna-name-input">
+        <div class="modal-buttons">
+          <button class="delete-account-btn" onclick="deleteAccount()">Delete Account</button>
+          <div class="right">
+            <button onclick="saveNames()">Save</button>
+            <button onclick="document.getElementById('settingsModal').style.display='none'">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registered.'))
+          .catch(err => console.error('Service Worker registration failed:', err));
+      });
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signOut, deleteUser, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { 
+      getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, 
+      collection, addDoc, deleteDoc, getDocs, runTransaction 
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOAFu7LNRAMTUVnYkFxdO0oBPl01fF5wE",
+      authDomain: "love-tank-e2af0.firebaseapp.com",
+      projectId: "love-tank-e2af0",
+      storageBucket: "love-tank-e2af0.firebasestorage.app",
+      messagingSenderId: "935253095562",
+      appId: "1:935253095562:web:0fe378a02b84d6bf936973"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loadingElement = document.getElementById('loading');
+    const loginPage = document.getElementById('login-page');
+    const mainApp = document.getElementById('main-app');
+    
+    let userUID;
+
+    // --- Page and UI Control ---
+    const togglePageVisibility = (page) => {
+        loadingElement.style.display = 'none';
+        if (page === 'login') {
+            loginPage.style.display = 'block';
+            mainApp.style.display = 'none';
+        } else if (page === 'main') {
+            loginPage.style.display = 'none';
+            mainApp.style.display = 'block';
+        }
+    };
+    
+    // --- Authentication Check and Data Loading ---
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        userUID = user.uid;
+        console.log("User logged in:", userUID);
+        togglePageVisibility('main');
+        setupDataListeners();
+      } else {
+        console.log("No user logged in, showing login page.");
+        togglePageVisibility('login');
+      }
+    });
+
+    // --- Login and Signup Functions ---
+    const getEmail = (username) => `${username}@couple-app.com`;
+
+    window.signUp = async () => {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      if (!username || !password) {
+        alert("Please enter a username and password.");
+        return;
+      }
+      try {
+        await createUserWithEmailAndPassword(auth, getEmail(username), password);
+        alert("Account created successfully! You are now logged in.");
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          alert("This username is already taken. Please try logging in or choose a different one.");
+        } else {
+          alert(`Error signing up: ${error.message}`);
+        }
+        console.error("Error signing up:", error);
+      }
+    };
+
+    window.logIn = async () => {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      if (!username || !password) {
+        alert("Please enter a username and password.");
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, getEmail(username), password);
+        alert("Logged in successfully!");
+      } catch (error) {
+        alert(`Error logging in: ${error.message}`);
+        console.error("Error logging in:", error);
+      }
+    };
+
+    // --- Main Application Functions ---
+    const setupDataListeners = () => {
+      // --- Names Listener ---
+      onSnapshot(doc(db, "users", userUID, "settings", "user-names"), (docSnap) => {
+        const khaledNameDisplay = document.getElementById('khaled-name-display');
+        const mannaNameDisplay = document.getElementById('manna-name-display');
+        const khaledTankHeading = document.getElementById('khaled-tank-heading');
+        const mannaTankHeading = document.getElementById('manna-tank-heading');
+        
+        if (docSnap.exists()) {
+          const names = docSnap.data();
+          khaledNameDisplay.textContent = names.khaled || "His";
+          mannaNameDisplay.textContent = names.manna || "Her";
+          khaledTankHeading.textContent = `${names.khaled || "His"}'s Tank`;
+          mannaTankHeading.textContent = `${names.manna || "Her"}'s Tank`;
+        } else {
+          khaledNameDisplay.textContent = "His";
+          mannaNameDisplay.textContent = "Her";
+          khaledTankHeading.textContent = "His Tank";
+          mannaTankHeading.textContent = "Her Tank";
+        }
+      });
+
+      // --- Tanks Listener ---
+      onSnapshot(doc(db, "users", userUID, "tanks", "levels"), (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById("khaled-fill").style.width = (data.khaled || 0) + "%";
+          document.getElementById("manna-fill").style.width = (data.manna || 0) + "%";
+        }
+      });
+      
+      // --- Notes Listener ---
+      onSnapshot(collection(db, "users", userUID, "notes"), (snapshot) => {
+        const notes = [];
+        snapshot.forEach(docSnap => notes.push({ id: docSnap.id, ...docSnap.data() }));
+        notes.sort((a, b) => b.createdAt?.toDate() - a.createdAt?.toDate());
+
+        const list = document.getElementById("notesList");
+        list.innerHTML = "";
+        
+        notes.forEach(note => {
+          const date = note.createdAt?.toDate().toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
+          const li = document.createElement("li");
+          
+          const content = document.createElement("span");
+          content.innerHTML = `${note.text} <small>${date}</small>`;
+          
+          const actions = document.createElement("div");
+          actions.classList.add("actions");
+          
+          const heartButton = document.createElement("button");
+          heartButton.innerHTML = note.liked ? "❤️" : "🤍";
+          heartButton.onclick = async () => {
+            await updateDoc(doc(db, "users", userUID, "notes", note.id), { liked: !note.liked });
+          };
+
+          const deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "✖";
+          deleteButton.onclick = () => deleteItem("notes", note.id);
+          
+          actions.appendChild(heartButton);
+          actions.appendChild(deleteButton);
+          li.appendChild(content);
+          li.appendChild(actions);
+          list.appendChild(li);
+        });
+      });
+
+      // --- Topics Listener ---
+      onSnapshot(collection(db, "users", userUID, "topics"), (snapshot) => {
+        const topics = [];
+        snapshot.forEach(docSnap => topics.push({ id: docSnap.id, ...docSnap.data() }));
+        
+        const list = document.getElementById("topicsList");
+        list.innerHTML = "";
+        topics.forEach(topic => {
+          const li = createCheckboxItem(topic.id, topic.text, topic.done, "topics");
+          
+          const deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "✖";
+          deleteButton.onclick = () => deleteItem("topics", topic.id);
+          
+          const actions = document.createElement("div");
+          actions.classList.add("actions");
+          actions.appendChild(deleteButton);
+          
+          li.appendChild(actions);
+          list.appendChild(li);
+        });
+      });
+
+      // --- To-Do List Listener ---
+      onSnapshot(collection(db, "users", userUID, "todos"), (snapshot) => {
+        const pendingList = document.getElementById("pendingList");
+        const approvedList = document.getElementById("approvedList");
+        pendingList.innerHTML = "";
+        approvedList.innerHTML = "";
+        
+        const allTodos = [];
+        snapshot.forEach(docSnap => allTodos.push({ id: docSnap.id, ...docSnap.data() }));
+
+        const pendingItems = allTodos.filter(item => item.status === "pending");
+        const approvedItems = allTodos.filter(item => item.status === "approved");
+
+        // Sort approved items: unchecked first
+        approvedItems.sort((a, b) => (a.done === b.done) ? 0 : a.done ? 1 : -1);
+
+        pendingItems.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item.text;
+          
+          const actions = document.createElement("div");
+          actions.classList.add("actions");
+          
+          const approveBtn = document.createElement("button");
+          approveBtn.textContent = "✔";
+          approveBtn.onclick = async () => await updateDoc(doc(db, "users", userUID, "todos", item.id), { status: "approved" });
+          
+          const declineBtn = document.createElement("button");
+          declineBtn.textContent = "✖";
+          declineBtn.onclick = async () => await deleteDoc(doc(db, "users", userUID, "todos", item.id));
+
+          actions.appendChild(approveBtn);
+          actions.appendChild(declineBtn);
+          li.appendChild(actions);
+          pendingList.appendChild(li);
+        });
+        
+        approvedItems.forEach(item => {
+          const li = createCheckboxItem(item.id, item.text, item.done, "todos");
+
+          const deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "✖";
+          deleteButton.onclick = () => deleteItem("todos", item.id);
+          
+          const actions = document.createElement("div");
+          actions.classList.add("actions");
+          actions.appendChild(deleteButton);
+          
+          li.appendChild(actions);
+          approvedList.appendChild(li);
+        });
+      });
+    };
+
+    // --- Utility Functions (Modified for User-Specific Data) ---
+    const createCheckboxItem = (id, text, isDone, collectionName) => {
+      const li = document.createElement("li");
+      li.classList.add('checkbox-item');
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = isDone;
+
+      const span = document.createElement("span");
+      span.textContent = text;
+      if (isDone) {
+        span.classList.add('done');
+      }
+
+      checkbox.onchange = async () => {
+        const docRef = doc(db, "users", userUID, collectionName, id);
+        await updateDoc(docRef, { done: checkbox.checked });
+      };
+
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      return li;
+    };
+    
+    const deleteItem = async (collectionName, id) => {
+      await deleteDoc(doc(db, "users", userUID, collectionName, id));
+    };
+
+    window.clearAll = async (collectionName) => {
+      if (!confirm(`Are you sure you want to clear all items? This cannot be undone.`)) {
+        return;
+      }
+      const querySnapshot = await getDocs(collection(db, "users", userUID, collectionName));
+      querySnapshot.forEach(async (document) => {
+        await deleteDoc(doc(db, "users", userUID, collectionName, document.id));
+      });
+    };
+
+    // --- Page-Specific Functions ---
+    window.openSettings = async () => {
+      const docSnap = await getDoc(doc(db, "users", userUID, "settings", "user-names"));
+      if (docSnap.exists()) {
+        const names = docSnap.data();
+        document.getElementById('khaled-name-input').value = names.khaled || "";
+        document.getElementById('manna-name-input').value = names.manna || "";
+      } else {
+        document.getElementById('khaled-name-input').value = "";
+        document.getElementById('manna-name-input').value = "";
+      }
+      document.getElementById('settingsModal').style.display = 'block';
+    };
+
+    window.saveNames = async () => {
+      const khaledName = document.getElementById('khaled-name-input').value || "His Name";
+      const mannaName = document.getElementById('manna-name-input').value || "Her Name";
+      
+      const ref = doc(db, "users", userUID, "settings", "user-names");
+      await setDoc(ref, {
+        khaled: khaledName,
+        manna: mannaName
+      }, { merge: true });
+
+      document.getElementById('settingsModal').style.display = 'none';
+    };
+
+    window.deleteAccount = async () => {
+      const confirmation = confirm("Are you sure you want to permanently delete your account and all data? This cannot be undone.");
+      if (confirmation) {
+        try {
+          const user = auth.currentUser;
+          if (!user) {
+            alert("No user is currently logged in.");
+            return;
+          }
+
+          await runTransaction(db, async (transaction) => {
+            transaction.delete(doc(db, "users", userUID, "settings", "user-names"));
+            transaction.delete(doc(db, "users", userUID, "tanks", "levels"));
+
+            const collectionsToDelete = ["notes", "topics", "todos"];
+            for (const collectionName of collectionsToDelete) {
+              const querySnapshot = await getDocs(collection(db, "users", userUID, collectionName));
+              querySnapshot.forEach((document) => {
+                transaction.delete(doc(db, "users", userUID, collectionName, document.id));
+              });
+            }
+          });
+          
+          await deleteUser(user);
+
+          alert("Your account and all data have been deleted.");
+        } catch (error) {
+          console.error("Error deleting account:", error);
+          alert("An error occurred while deleting the account. Please try again.");
+        }
+      }
+    };
+    
+    window.logOut = async () => {
+      try {
+        await signOut(auth);
+        alert("Logged out successfully.");
+      } catch (error) {
+        console.error("Error logging out:", error);
+        alert("An error occurred while logging out.");
+      }
+    };
+
+    window.updateTank = async (person, change) => {
+      if (!userUID) return;
+      const ref = doc(db, "users", userUID, "tanks", "levels");
+      try {
+        const snap = await getDoc(ref);
+        let current = snap.exists() ? snap.data()[person] : 0;
+        let newVal = Math.max(0, Math.min(100, current + change));
+        await setDoc(ref, { [person]: newVal }, { merge: true });
+      } catch (err) {
+        console.error("Error updating tank:", err);
+      }
+    };
+
+    window.addNote = async () => {
+      if (!userUID) return;
+      const input = document.getElementById("noteInput");
+      const text = input.value.trim();
+      if (!text) return;
+      await addDoc(collection(db, "users", userUID, "notes"), { text, createdAt: new Date() });
+      input.value = "";
+    };
+
+    window.addTopic = async () => {
+      if (!userUID) return;
+      const input = document.getElementById("topicInput");
+      const text = input.value.trim();
+      if (!text) return;
+      await addDoc(collection(db, "users", userUID, "topics"), { text, done: false });
+      input.value = "";
+    };
+
+    window.addTodo = async () => {
+      if (!userUID) return;
+      const input = document.getElementById("todoInput");
+      const text = input.value.trim();
+      if (!text) return;
+      await addDoc(collection(db, "users", userUID, "todos"), { text, status: "pending", done: false });
+      input.value = "";
+    };
+  </script>
 </body>
 </html>
