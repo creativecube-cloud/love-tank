@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>His and Her Space</title>
+  <title>Love Tank</title>
   <link rel="manifest" href="manifest.json">
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background: #ffeef5; /* soft powdery pink */
+      background: #ffeef5;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -66,11 +66,11 @@
       margin: 20px 0;
     }
     .tank {
-      flex: 1; /* Use flexbox to make tanks equal width */
+      flex: 1;
       text-align: center;
       padding: 10px;
       border-radius: 10px;
-      background: #ebebeb; /* light gray */
+      background: #ebebeb;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .progress {
@@ -87,10 +87,10 @@
       transition: width 0.3s;
     }
     .khaled .progress-fill {
-      background: #003366; /* deep navy blue */
+      background: #003366;
     }
     .manna .progress-fill {
-      background: #b30059; /* deep raspberry pink */
+      background: #b30059;
     }
     .tank button {
       margin: 5px;
@@ -366,7 +366,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('./sw.js')
           .then(reg => console.log('Service Worker registered.'))
           .catch(err => console.error('Service Worker registration failed:', err));
       });
@@ -631,8 +631,8 @@
       };
 
       li.appendChild(checkbox);
-      li.appendChild(span);
-      return li;
+        li.appendChild(span);
+        return li;
     };
     
     const deleteItem = async (collectionName, id) => {
